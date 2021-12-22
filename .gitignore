@@ -5,5 +5,4 @@ Stage1/build/*
 Stage2/build/*
 
 # boost
-Include/External/boost/*
-!Include/External/boost/placeholder.txt
+Stage2/external/boost/*

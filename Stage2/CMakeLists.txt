@@ -35,13 +35,25 @@ if(NOT Boost_POPULATED)
     message(VERBOSE "Executing bootstrap cmd: ${BOOTSTRAP_CMD} ${PREFIX}")
     execute_process(COMMAND ${BOOTSTRAP_CMD} ${PREFIX} WORKING_DIRECTORY ${boost_SOURCE_DIR} COMMAND_ECHO STDOUT RESULT_VARIABLE ret)
     
+    # TODO Move to helper function
     if(NOT ret EQUAL 0)
-        message( FATAL_ERROR "Bad exit status")
+        message( FATAL_ERROR "Bootstrap failed. Bad exit status ${ret}")
     else()
         message(VERBOSE "Bootstrap completed successfully")
     endif()
 
-    # execute_process(COMMAND ${bootstrap} --prefix=${CMAKE_CURRENT_SOURCE_DIR}/external/boost WORKING_DIRECTORY ${boost_SOURCE_DIR})
+
+    set(B2_CMD ${boost_SOURCE_DIR}/b2)
+    set(B2_ARGS install)
+    message(VERBOSE "Executing b2 cmd: ${B2_CMD} ${B2_ARGS}")
+    execute_process(COMMAND ${B2_CMD} ${B2_ARGS} WORKING_DIRECTORY ${boost_SOURCE_DIR} COMMAND_ECHO STDOUT RESULT_VARIABLE ret)
+
+    # TODO Move to helper function
+    if(NOT ret EQUAL 0)
+        message( FATAL_ERROR "b2 failed. Bad exit status ${ret}")
+    else()
+        message(VERBOSE "b2 completed successfully")
+    endif()
 endif()
 
 
