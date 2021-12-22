@@ -1,3 +1,9 @@
 **/.DS_Store
 
+# local build dirs
 Stage1/build/*
+Stage2/build/*
+
+# boost
+Include/External/boost/*
+!Include/External/boost/placeholder.txt
