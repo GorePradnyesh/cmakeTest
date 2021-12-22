@@ -23,7 +23,7 @@ FetchContent_Declare(
     URL_HASH SHA256=${BOOST_URL_SHA256}
 )
 FetchContent_GetProperties(Boost)
-if(NOT Boost_POPULATED)
+if(NOT EXISTS ${PROJECT_SOURCE_DIR}/external/boost/lib)
     message(STATUS "Fetching Boost")
     FetchContent_Populate(Boost)
     message(STATUS "Fetching Boost - done")
@@ -65,6 +65,9 @@ file(GLOB INC CONFIGURE_DEPENDS
     inc/*.h 
 	inc/*.hpp)
 
+file(GLOB BOOST_INC CONFIGURE_DEPENDS
+    external/boost/include/*.hppl)
+
 
 assign_source_group(${SRC})
 assign_source_group(${INC})
@@ -73,4 +76,11 @@ add_executable(Stage2
     ${SRC} 
     ${INC})
 
-target_include_directories(Stage2 PRIVATE inc)
+# include paths
+target_include_directories(Stage2 PRIVATE inc external/boost/include)
+
+# lib search dir
+target_link_directories(Stage2 PRIVATE ${PROJECT_SOURCE_DIR}/external/boost/lib)
+
+# link libs 
+target_link_libraries(Stage2 boost_program_options)
